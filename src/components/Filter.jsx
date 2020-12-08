@@ -16,11 +16,17 @@ const FilterElement = styled.div`
 	margin-bottom: 30px;
 `
 
+const initFilterState = () => ({
+	country: "",
+	types: [],
+	stars: {},
+});
+
 export const Filter = () => {
 	const dispatch = useDispatch()
 	const hotels = useSelector(({hotelsReducer}) => hotelsReducer.hotels)
 
-	const [filterData, setFilterData] = React.useState({})
+	const [filterData, setFilterData] = React.useState(initFilterState());
 
 	const removeDuplicates = (arr, value) => {
 		arr = arr.map(item => item[value])
@@ -41,15 +47,20 @@ export const Filter = () => {
 	}
 
 	const setStars = (stars) => {
+		//тут мы всегда закидываем value
 		setFilterData({...filterData, stars})
 	}
 
 	const onApplyFilter = () => {
-		dispatch(filterHotels(filterData))
+		//берем только ключи и только те ключи у которых значение тру и переводим их в число
+		const stars = Object.keys(filterData.stars)
+			.filter(key => filterData.stars[key])
+			.map(item => parseInt(item));
+		dispatch(filterHotels({...filterData, stars}))
 	}
 
 	const onResetFilter = () => {
-		setFilterData({});
+		setFilterData(initFilterState());
 		dispatch(filterHotels({}))
 	}
 
@@ -68,11 +79,11 @@ export const Filter = () => {
 	//
 	// 	setFilterState({...filterState, types: arr})
 	// }
-	
+
 	return (
 		<FilterBlock>
 			<FilterElement>
-				<Country countries={countries} onChange={setCountry} value={filterData.country ?? ""}/>
+				<Country countries={countries} onChange={setCountry} value={filterData.country}/>
 			</FilterElement>
 
 			<FilterElement>
@@ -80,7 +91,8 @@ export const Filter = () => {
 			</FilterElement>
 
 			<FilterElement>
-				<Stars stars={stars} getStars={setStars} />
+				{/*value = либо stars либо пустой массив если не задан*/}
+				<Stars stars={stars} onChange={setStars} value={filterData.stars} />
 			</FilterElement>
 
 			<FilterElement>

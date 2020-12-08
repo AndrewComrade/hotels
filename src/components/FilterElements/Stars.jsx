@@ -1,25 +1,12 @@
 import React from 'react';
 import {FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox} from "@material-ui/core";
 
-//todo: добавить value
-export const Stars = ({stars, getStars}) => {
-	const obj = stars.reduce((a, b) => (a[b] = false, a), {});
-
-	const [state, setState] = React.useState(obj)
-
+export const Stars = ({stars, onChange, value}) => {
 	const handleChange = (e) => {
-		setState({...state, [e.target.name]: e.target.checked})
-	}
-	//
-	// React.useEffect(() => {
-	// 	let checked = []
-	// 	for (let key in state) {
-	// 		if (state[key] === true) {
-	// 			checked.push(+key)
-	// 		}
-	// 	}
-	// 	getStars(checked)
-	// }, [state])
+		const {name, checked} = e.target;
+		//передаем старое значение с новым
+		onChange({...value, [name]: checked});
+	};
 
 
 	return (
@@ -29,7 +16,8 @@ export const Stars = ({stars, getStars}) => {
 				{stars && stars.map((item, index) => (
 					<FormControlLabel
 						key={index}
-						control={<Checkbox checked={state[item]} onChange={handleChange} name={item.toString()}/>}
+						//checked={value[item]} так у нас если поля нет то оно будет undef а значит false
+						control={<Checkbox checked={!!value[item]} onChange={handleChange} name={item.toString()}/>}
 						label={item}
 					/>
 				))}

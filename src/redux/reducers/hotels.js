@@ -29,11 +29,11 @@ export const hotelsReducer = (state = initialState, action) => {
 				filteredHotels = filteredHotels
 					.filter(hotel => hotel.country === country);
 			}
-			if (types) {
+			if (types && types.length > 0) {
 				filteredHotels = filteredHotels
 					.filter(hotel => types.includes(hotel.type));
 			}
-			if (stars) {
+			if (stars && stars.length > 0) {
 				filteredHotels = filteredHotels
 					.filter(hotel => stars.includes(hotel.stars));
 			}
