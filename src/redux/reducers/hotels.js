@@ -13,6 +13,7 @@ export const hotelsReducer = (state = initialState, action) => {
 			isLoaded: true
 		}
 	}
+
 	if (action.type === FILTER_HOTELS) {
 		if (!action.payload) {
 			return state.hotels

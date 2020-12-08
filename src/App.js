@@ -35,7 +35,6 @@ export const App = () => {
 
 	console.log(hotels);
 
-
 	return (
 		<Container>
 			{!!isLoaded &&

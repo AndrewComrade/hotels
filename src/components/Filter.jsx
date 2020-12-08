@@ -6,7 +6,6 @@ import {Country, Type, Stars, Reviews, Price} from './FilterElements';
 import {Button} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {filterHotels} from "../redux/actions/filters";
-import {fetchHotels} from "../redux/actions/hotels";
 
 const FilterBlock = styled.div`
 	display:flex;
@@ -46,10 +45,12 @@ export const Filter = () => {
 	}
 
 	const onApplyFilter = () => {
-		dispatch(filterHotels(filterData))
+
+		console.log(dispatch(filterHotels(filterData)));
 	}
 
 	const onResetFilter = () => {
+		setFilterData({})
 		dispatch(filterHotels({}))
 	}
 
