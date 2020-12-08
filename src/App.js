@@ -31,6 +31,25 @@ export const App = () => {
 	}, [])
 
 	const hotels = useSelector(({hotelsReducer}) => hotelsReducer.filteredHotels ? hotelsReducer.filteredHotels : hotelsReducer.hotels)
+	//как вариант когда у тебя 2 редюсера. 1 хранит данные, 2 хранит данные фильтра. Внизу это то что они называют мутацией.
+	//Получается ты фильтруешь только тогда когда надо. Основные данные лежат отедльно
+	// const hotels = useSelector(({hotelsReducer, filterReducer}) => {
+	// 	let {hotels} = hotelsReducer;
+	// 	const {country, types, stars} = filterReducer;
+	// 	if(country) {
+	// 		hotels = hotels
+	// 			.filter(hotel => hotel.country === country);
+	// 	}
+	// 	if (types) {
+	// 		hotels = hotels
+	// 			.filter(hotel => types.includes(hotel.type));
+	// 	}
+	// 	if (stars) {
+	// 		hotels = hotels
+	// 			.filter(hotel => stars.includes(hotel.stars));
+	// 	}
+	// 	return hotels;
+	// });
 	const isLoaded = useSelector(({hotelsReducer}) => hotelsReducer.isLoaded)
 
 	console.log(hotels);
