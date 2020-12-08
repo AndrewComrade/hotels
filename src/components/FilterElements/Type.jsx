@@ -7,6 +7,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
+//todo: добавить value в select
 export const Type = ({types, getTypes}) => {
 	const classes = useStyles();
 

@@ -3,34 +3,44 @@ import {FILTER_HOTELS, SET_HOTELS} from "../constants/types";
 const initialState = {
 	hotels: [],
 	isLoaded: false,
-}
+	//лучше сразу все поля явно показать
+	filteredHotels: null
+};
 
 export const hotelsReducer = (state = initialState, action) => {
-	if (action.type === SET_HOTELS) {
-		return {
-			...state,
-			hotels: action.payload,
-			isLoaded: true
-		}
+	//switch лучше
+	switch (action.type) {
+		case SET_HOTELS:
+			return {
+				...state,
+				hotels: action.payload,
+				isLoaded: true
+			};
+
+		case FILTER_HOTELS:
+			if (!action.payload) {
+				return {...state, filteredHotels: null};
+			}
+
+			let {country, types, stars} = action.payload;
+			let filteredHotels = state.hotels;
+			//отдельные if'ы потому что можгут прийти не все поля
+			if (country) {
+				filteredHotels = filteredHotels
+					.filter(hotel => hotel.country === country);
+			}
+			if (types) {
+				filteredHotels = filteredHotels
+					.filter(hotel => types.includes(hotel.type));
+			}
+			if (stars) {
+				filteredHotels = filteredHotels
+					.filter(hotel => stars.includes(hotel.stars));
+			}
+
+			return {...state, filteredHotels};
+		default:
+			//лучше всегда возвращать новую копию
+			return {...state};
 	}
-
-	if (action.type === FILTER_HOTELS) {
-		if (!action.payload) {
-			return state.hotels
-		}
-
-		let {country, types, stars} = action.payload
-		let newState = Object.assign({}, state)
-
-		if (country || types || stars) {
-			newState.filteredHotels = state.hotels
-				.filter(hotel => hotel.country === country)
-				.filter(hotel => types.includes(hotel.type))
-				.filter(hotel => stars.includes(hotel.stars))
-		} else {
-			newState = state.hotels
-		}
-		return newState
-	}
-	return state
-}
+};

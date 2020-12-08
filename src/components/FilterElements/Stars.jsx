@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox} from "@material-ui/core";
 
+//todo: добавить value
 export const Stars = ({stars, getStars}) => {
 	const obj = stars.reduce((a, b) => (a[b] = false, a), {});
 

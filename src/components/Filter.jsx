@@ -32,15 +32,15 @@ export const Filter = () => {
 	const types = removeDuplicates(hotels, 'type')
 	const stars = removeDuplicates(hotels, 'stars').sort()
 
-	const getCountry = (country) => {
+	const setCountry = (country) => {
 		setFilterData({...filterData, country})
 	}
 
-	const getTypes = (types) => {
+	const setType = (types) => {
 		setFilterData({...filterData, types})
 	}
 
-	const getStars = (stars) => {
+	const setStars = (stars) => {
 		setFilterData({...filterData, stars})
 	}
 
@@ -49,7 +49,7 @@ export const Filter = () => {
 	}
 
 	const onResetFilter = () => {
-		setFilterData({})
+		setFilterData({});
 		dispatch(filterHotels({}))
 	}
 
@@ -72,15 +72,15 @@ export const Filter = () => {
 	return (
 		<FilterBlock>
 			<FilterElement>
-				<Country countries={countries} getCountry={getCountry}/>
+				<Country countries={countries} onChange={setCountry} value={filterData.country ?? ""}/>
 			</FilterElement>
 
 			<FilterElement>
-				<Type types={types} getTypes={getTypes}/>
+				<Type types={types} getTypes={setType}/>
 			</FilterElement>
 
 			<FilterElement>
-				<Stars stars={stars} getStars={getStars} />
+				<Stars stars={stars} getStars={setStars} />
 			</FilterElement>
 
 			<FilterElement>
