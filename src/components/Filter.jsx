@@ -45,8 +45,7 @@ export const Filter = () => {
 	}
 
 	const onApplyFilter = () => {
-
-		console.log(dispatch(filterHotels(filterData)));
+		dispatch(filterHotels(filterData))
 	}
 
 	const onResetFilter = () => {
