@@ -20,7 +20,15 @@ const initFilterState = () => ({
 	country: "",
 	types: [],
 	stars: {},
+	reviewsAmount: "",
+	priceRange: []
 });
+
+const removeDuplicates = (arr, value) => {
+	arr = arr.map(item => item[value])
+	arr = [...new Set(arr)]
+	return arr
+}
 
 export const Filter = () => {
 	const dispatch = useDispatch()
@@ -28,15 +36,11 @@ export const Filter = () => {
 
 	const [filterData, setFilterData] = React.useState(initFilterState());
 
-	const removeDuplicates = (arr, value) => {
-		arr = arr.map(item => item[value])
-		arr = [...new Set(arr)]
-		return arr
-	}
-
 	const countries = removeDuplicates(hotels, 'country').sort()
 	const types = removeDuplicates(hotels, 'type')
 	const stars = removeDuplicates(hotels, 'stars').sort()
+
+	const maxPrice = Math.ceil(Math.max.apply(Math, removeDuplicates(hotels, 'min_price')) / 1000) * 1000
 
 	const setCountry = (country) => {
 		setFilterData({...filterData, country})
@@ -47,38 +51,29 @@ export const Filter = () => {
 	}
 
 	const setStars = (stars) => {
-		//тут мы всегда закидываем value
 		setFilterData({...filterData, stars})
 	}
 
+	const setReviewAmount = (reviewsAmount) => {
+		setFilterData({...filterData, reviewsAmount})
+	}
+
+	const setPriceRange = (priceRange) => {
+		setFilterData({...filterData, priceRange})
+	}
+
 	const onApplyFilter = () => {
-		//берем только ключи и только те ключи у которых значение тру и переводим их в число
 		const stars = Object.keys(filterData.stars)
 			.filter(key => filterData.stars[key])
 			.map(item => parseInt(item));
+
 		dispatch(filterHotels({...filterData, stars}))
 	}
 
 	const onResetFilter = () => {
 		setFilterData(initFilterState());
-		dispatch(filterHotels({}))
+		dispatch(filterHotels(initFilterState()))
 	}
-
-
-	// const [filterState, setFilterState] = React.useState({
-	// 	country: '',
-	// 	types: [],
-	// })
-
-	// const onCountryChange = (e) => {
-	// 	setFilterState({...filterState, country: e.target.innerText})
-	// }
-	//
-	// const onTypesChange = (arr) => {
-	// 	console.log(arr);
-	//
-	// 	setFilterState({...filterState, types: arr})
-	// }
 
 	return (
 		<FilterBlock>
@@ -87,20 +82,19 @@ export const Filter = () => {
 			</FilterElement>
 
 			<FilterElement>
-				<Type types={types} getTypes={setType}/>
+				<Type types={types} onChange={setType} value={filterData.types}/>
 			</FilterElement>
 
 			<FilterElement>
-				{/*value = либо stars либо пустой массив если не задан*/}
-				<Stars stars={stars} onChange={setStars} value={filterData.stars} />
+				<Stars stars={stars} onChange={setStars} value={filterData.stars}/>
 			</FilterElement>
 
 			<FilterElement>
-				<Reviews/>
+				<Reviews onChange={setReviewAmount} value={filterData.reviewsAmount}/>
 			</FilterElement>
 
 			<FilterElement>
-				<Price/>
+				<Price onChange={setPriceRange} priceRange={filterData.priceRange} maxPrice={maxPrice}/>
 			</FilterElement>
 
 			<FilterElement>

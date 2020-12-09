@@ -7,19 +7,12 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-//todo: добавить value в select
-export const Type = ({types, getTypes}) => {
+export const Type = ({types, value, onChange}) => {
 	const classes = useStyles();
 
-	const [selected, setSelected] = React.useState([]);
-
 	const handleChange = (event) => {
-		setSelected(event.target.value);
+		onChange(event.target.value)
 	};
-
-	React.useEffect(() => {
-		getTypes(selected)
-	}, [selected])
 
 	return (
 		<FormControl variant="outlined" className={classes.formControl}>
@@ -27,13 +20,13 @@ export const Type = ({types, getTypes}) => {
 			<Select
 				multiple
 				label="Тип"
-				renderValue={(selected) => selected.join(', ')}
+				renderValue={(value) => value.join(', ')}
 				onChange={handleChange}
-				value={selected}
+				value={value}
 			>
 				{types.map((type) => (
 					<MenuItem key={type} value={type}>
-						<Checkbox checked={selected.indexOf(type) > -1}/>
+						<Checkbox checked={value.indexOf(type) > -1}/>
 						<ListItemText primary={type}/>
 					</MenuItem>
 				))}

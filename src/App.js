@@ -14,7 +14,7 @@ const Container = styled.div`
 	max-width: 1170px;
 	display: grid;
 	grid-template-columns: 1fr 2fr;
-	grid-column-gap: 30px;
+	grid-column-gap: 50px;
 	height: 100vh;
 `
 
@@ -31,8 +31,7 @@ export const App = () => {
 	}, [])
 
 	const hotels = useSelector(({hotelsReducer}) => hotelsReducer.filteredHotels ? hotelsReducer.filteredHotels : hotelsReducer.hotels)
-	//как вариант когда у тебя 2 редюсера. 1 хранит данные, 2 хранит данные фильтра. Внизу это то что они называют мутацией.
-	//Получается ты фильтруешь только тогда когда надо. Основные данные лежат отедльно
+
 	// const hotels = useSelector(({hotelsReducer, filterReducer}) => {
 	// 	let {hotels} = hotelsReducer;
 	// 	const {country, types, stars} = filterReducer;
@@ -50,9 +49,8 @@ export const App = () => {
 	// 	}
 	// 	return hotels;
 	// });
-	const isLoaded = useSelector(({hotelsReducer}) => hotelsReducer.isLoaded)
 
-	console.log(hotels);
+	const isLoaded = useSelector(({hotelsReducer}) => hotelsReducer.isLoaded)
 
 	return (
 		<Container>

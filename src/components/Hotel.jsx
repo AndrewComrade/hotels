@@ -24,7 +24,6 @@ const LeftContent = styled.div`
 `
 
 const RightContent = styled(LeftContent)`
-	
 `
 
 const InfoBlock = styled.div`
@@ -57,7 +56,7 @@ export const Hotel = ({name, stars, type, reviews_amount, country, description, 
 				<p>{description}</p>
 			</LeftContent>
 			<RightContent>
-				<p>{Math.floor(min_price)} {currency}</p>
+				<p>{Math.ceil(Math.floor(min_price) / 100) * 100} {currency}</p>
 				<span>За 1 ночь</span>
 				<Button
 					onClick={() => setBooked(!isBooked)}

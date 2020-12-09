@@ -3,12 +3,10 @@ import {FILTER_HOTELS, SET_HOTELS} from "../constants/types";
 const initialState = {
 	hotels: [],
 	isLoaded: false,
-	//лучше сразу все поля явно показать
 	filteredHotels: null
 };
 
 export const hotelsReducer = (state = initialState, action) => {
-	//switch лучше
 	switch (action.type) {
 		case SET_HOTELS:
 			return {
@@ -22,9 +20,8 @@ export const hotelsReducer = (state = initialState, action) => {
 				return {...state, filteredHotels: null};
 			}
 
-			let {country, types, stars} = action.payload;
+			let {country, types, stars, reviewsAmount, priceRange} = action.payload;
 			let filteredHotels = state.hotels;
-			//отдельные if'ы потому что можгут прийти не все поля
 			if (country) {
 				filteredHotels = filteredHotels
 					.filter(hotel => hotel.country === country);
@@ -37,10 +34,16 @@ export const hotelsReducer = (state = initialState, action) => {
 				filteredHotels = filteredHotels
 					.filter(hotel => stars.includes(hotel.stars));
 			}
-
+			if (reviewsAmount > 0) {
+				filteredHotels = filteredHotels
+					.filter(hotel => hotel.reviews_amount >= reviewsAmount)
+			}
+			if (priceRange && priceRange.length > 0) {
+				filteredHotels = filteredHotels
+					.filter(hotel => hotel.min_price >= priceRange[0] && hotel.min_price <= priceRange[1])
+			}
 			return {...state, filteredHotels};
 		default:
-			//лучше всегда возвращать новую копию
 			return {...state};
 	}
 };
