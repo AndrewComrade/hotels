@@ -26,11 +26,14 @@ const List = styled.ul`
 
 export const App = () => {
 	const dispatch = useDispatch()
-	const isLoaded = useSelector(({hotelsReducer}) => hotelsReducer.isLoaded)
-	const perPage = useSelector(({hotelsReducer}) => hotelsReducer.perPage)
-	const currentPage = useSelector(({hotelsReducer}) => hotelsReducer.currentPage)
-	const hotels = useSelector(({hotelsReducer}) => hotelsReducer.filteredHotels)
-	let count = Math.ceil(hotels.length / perPage)
+	const {
+		isLoaded,
+		perPage,
+		currentPage,
+		filteredHotels
+	} = useSelector(({hotelsReducer}) => hotelsReducer)
+
+	let count = Math.ceil(filteredHotels.length / perPage)
 
 	React.useEffect(() => {
 		dispatch(fetchHotels())
@@ -45,13 +48,13 @@ export const App = () => {
 			{!!isLoaded &&
 			<React.Fragment>
 				<Filter/>
-				<List>{hotels && hotels
+				<List>{filteredHotels && filteredHotels
 					.slice(perPage * (currentPage - 1), perPage * currentPage)
 					.map((hotel, index) => (
 						<Hotel key={index} {...hotel}/>
 					))}
-					{hotels.length === 0 && <div>Записей не найдено</div>}
-					{hotels.length > 0 &&
+					{filteredHotels.length === 0 && <div>Записей не найдено</div>}
+					{filteredHotels.length > 0 &&
 						<Pagination onChange={onPageChange} page={currentPage} count={count}/>
 					}
 				</List>
