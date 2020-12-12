@@ -50,7 +50,7 @@ export const App = () => {
 				<Filter/>
 				<List>{filteredHotels && filteredHotels
 					.slice(perPage * (currentPage - 1), perPage * currentPage)
-					.map((hotel, index) => (
+					.map(hotel => (
 						<Hotel key={`${hotel.name}`} {...hotel}/>
 					))}
 					{filteredHotels.length === 0 && <div>Записей не найдено</div>}
