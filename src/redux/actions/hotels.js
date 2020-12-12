@@ -1,4 +1,4 @@
-import {SET_HOTELS} from "../constants/types";
+import {SET_CURRENT_PAGE, SET_HOTELS} from "../constants/types";
 import axios from "axios";
 
 export const fetchHotels = () => dispatch => {
@@ -10,4 +10,9 @@ export const fetchHotels = () => dispatch => {
 export const setHotels = (hotels) => ({
 	type: SET_HOTELS,
 	payload: hotels,
+})
+
+export const setCurrentPage = (currentPAge) => ({
+	type: SET_CURRENT_PAGE,
+	payload: currentPAge
 })

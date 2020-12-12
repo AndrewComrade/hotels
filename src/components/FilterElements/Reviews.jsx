@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import {FormControl, Input, InputLabel} from "@material-ui/core";
 
 export const Reviews = ({value, onChange}) => {
@@ -13,3 +15,8 @@ export const Reviews = ({value, onChange}) => {
 		</FormControl>
 	);
 };
+
+Reviews.propTypes = {
+	value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+	onChange: PropTypes.func.isRequired
+}

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import {Autocomplete} from "@material-ui/lab";
 import {TextField} from "@material-ui/core";
 
@@ -18,3 +20,9 @@ export const Country = ({countries, onChange, value}) => {
 		</Autocomplete>
 	);
 };
+
+Country.propTypes = {
+	countries: PropTypes.arrayOf(PropTypes.string).isRequired,
+	value: PropTypes.string.isRequired,
+	onChange: PropTypes.func.isRequired
+}

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import {FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox} from "@material-ui/core";
 
 export const Stars = ({stars, onChange, value}) => {
@@ -22,3 +24,9 @@ export const Stars = ({stars, onChange, value}) => {
 		</FormControl>
 	);
 };
+
+Stars.propTypes = {
+	stars: PropTypes.arrayOf(PropTypes.number).isRequired,
+	value: PropTypes.object.isRequired,
+	onChange: PropTypes.func.isRequired
+}

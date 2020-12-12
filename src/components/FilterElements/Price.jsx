@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {FormControl, FormLabel, makeStyles, Slider} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
@@ -39,3 +40,9 @@ export const Price = ({onChange, priceRange, maxPrice}) => {
 		</FormControl>
 	);
 };
+
+Price.propTypes = {
+	onChange: PropTypes.func.isRequired,
+	maxPrice: PropTypes.number.isRequired,
+	priceRange: PropTypes.arrayOf(PropTypes.number).isRequired
+}

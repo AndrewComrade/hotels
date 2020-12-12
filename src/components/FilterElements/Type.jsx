@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from "prop-types";
+
 import {makeStyles, Checkbox, ListItemText, MenuItem, Select, FormControl, InputLabel} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
@@ -34,3 +36,9 @@ export const Type = ({types, value, onChange}) => {
 		</FormControl>
 	);
 };
+
+Type.propTypes = {
+	types:  PropTypes.arrayOf(PropTypes.string).isRequired,
+	value:  PropTypes.arrayOf(PropTypes.string).isRequired,
+	onChange: PropTypes.func.isRequired
+}

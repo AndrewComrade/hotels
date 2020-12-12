@@ -5,7 +5,8 @@ import styled from "styled-components";
 import {Country, Type, Stars, Reviews, Price} from './FilterElements';
 import {Button} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {filterHotels} from "../redux/actions/filters";
+import {filterHotels, resetFilters} from "../redux/actions/filters";
+import {setCurrentPage} from "../redux/actions/hotels";
 
 const FilterBlock = styled.div`
 	display:flex;
@@ -68,11 +69,12 @@ export const Filter = () => {
 			.map(item => parseInt(item));
 
 		dispatch(filterHotels({...filterData, stars}))
+		dispatch(setCurrentPage(1))
 	}
 
 	const onResetFilter = () => {
 		setFilterData(initFilterState());
-		dispatch(filterHotels(initFilterState()))
+		dispatch(resetFilters())
 	}
 
 	return (

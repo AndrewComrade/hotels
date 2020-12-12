@@ -1,9 +1,11 @@
-import {FILTER_HOTELS, SET_HOTELS} from "../constants/types";
+import {FILTER_HOTELS, RESET_FILTERS, SET_CURRENT_PAGE, SET_HOTELS} from "../constants/types";
 
 const initialState = {
 	hotels: [],
+	filteredHotels: [],
 	isLoaded: false,
-	filteredHotels: null
+	perPage: 3,
+	currentPage: 1
 };
 
 export const hotelsReducer = (state = initialState, action) => {
@@ -12,16 +14,23 @@ export const hotelsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				hotels: action.payload,
+				filteredHotels: action.payload,
 				isLoaded: true
 			};
-
-		case FILTER_HOTELS:
-			if (!action.payload) {
-				return {...state, filteredHotels: null};
+		case SET_CURRENT_PAGE:
+			return {
+				...state,
+				currentPage: action.payload,
 			}
-
+		case RESET_FILTERS:
+			return {
+				...state,
+				filteredHotels: state.hotels
+			};
+		case FILTER_HOTELS:
 			let {country, types, stars, reviewsAmount, priceRange} = action.payload;
 			let filteredHotels = state.hotels;
+
 			if (country) {
 				filteredHotels = filteredHotels
 					.filter(hotel => hotel.country === country);

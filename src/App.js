@@ -4,9 +4,10 @@ import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
 import './app.scss'
 import {CircularProgress} from "@material-ui/core";
+import {Pagination} from "@material-ui/lab";
 
 import {Filter, Hotel} from './components'
-import {fetchHotels} from "./redux/actions/hotels";
+import {fetchHotels, setCurrentPage} from "./redux/actions/hotels";
 
 const Container = styled.div`
 	margin: 0 auto;
@@ -25,41 +26,34 @@ const List = styled.ul`
 
 export const App = () => {
 	const dispatch = useDispatch()
+	const isLoaded = useSelector(({hotelsReducer}) => hotelsReducer.isLoaded)
+	const perPage = useSelector(({hotelsReducer}) => hotelsReducer.perPage)
+	const currentPage = useSelector(({hotelsReducer}) => hotelsReducer.currentPage)
+	const hotels = useSelector(({hotelsReducer}) => hotelsReducer.filteredHotels)
+	let count = Math.ceil(hotels.length / perPage)
 
 	React.useEffect(() => {
 		dispatch(fetchHotels())
 	}, [])
 
-	const hotels = useSelector(({hotelsReducer}) => hotelsReducer.filteredHotels ? hotelsReducer.filteredHotels : hotelsReducer.hotels)
-
-	// const hotels = useSelector(({hotelsReducer, filterReducer}) => {
-	// 	let {hotels} = hotelsReducer;
-	// 	const {country, types, stars} = filterReducer;
-	// 	if(country) {
-	// 		hotels = hotels
-	// 			.filter(hotel => hotel.country === country);
-	// 	}
-	// 	if (types) {
-	// 		hotels = hotels
-	// 			.filter(hotel => types.includes(hotel.type));
-	// 	}
-	// 	if (stars) {
-	// 		hotels = hotels
-	// 			.filter(hotel => stars.includes(hotel.stars));
-	// 	}
-	// 	return hotels;
-	// });
-
-	const isLoaded = useSelector(({hotelsReducer}) => hotelsReducer.isLoaded)
+	const onPageChange = (event, value) => {
+		dispatch(setCurrentPage(value))
+	}
 
 	return (
 		<Container>
 			{!!isLoaded &&
 			<React.Fragment>
 				<Filter/>
-				<List>{hotels && hotels.map((hotel, index) => (
-					<Hotel key={index} {...hotel}/>
-				))}
+				<List>{hotels && hotels
+					.slice(perPage * (currentPage - 1), perPage * currentPage)
+					.map((hotel, index) => (
+						<Hotel key={index} {...hotel}/>
+					))}
+					{hotels.length === 0 && <div>Записей не найдено</div>}
+					{hotels.length > 0 &&
+						<Pagination onChange={onPageChange} page={currentPage} count={count}/>
+					}
 				</List>
 			</React.Fragment>
 			}
