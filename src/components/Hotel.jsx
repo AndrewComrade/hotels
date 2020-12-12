@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styled from "styled-components";
 
@@ -70,3 +71,13 @@ export const Hotel = ({name, stars, type, reviews_amount, country, description, 
 		</HotelBlock>
 	);
 };
+
+Hotel.prooTypes = {
+	name: PropTypes.string.isRequired,
+	stars: PropTypes.number.isRequired,
+	type: PropTypes.string.isRequired,
+	reviews_amount: PropTypes.number.isRequired,
+	country:  PropTypes.string.isRequired,
+	min_price:  PropTypes.number.isRequired,
+	currency: PropTypes.string.isRequired
+}
