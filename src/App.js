@@ -37,7 +37,7 @@ export const App = () => {
 
 	React.useEffect(() => {
 		dispatch(fetchHotels())
-	}, [])
+	}, [dispatch])
 
 	const onPageChange = (event, value) => {
 		dispatch(setCurrentPage(value))

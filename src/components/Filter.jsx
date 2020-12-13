@@ -18,7 +18,7 @@ const FilterElement = styled.div`
 `
 
 const initFilterState = () => ({
-	country: "",
+	country: null,
 	types: [],
 	stars: {},
 	reviewsAmount: "",

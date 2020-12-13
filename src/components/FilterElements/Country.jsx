@@ -6,14 +6,15 @@ import {TextField} from "@material-ui/core";
 
 export const Country = ({countries, onChange, value}) => {
 
-	const onCountryChange = (e) => {
-		onChange(e.target.innerText)
+	const onCountryChange = (event, value) => {
+		onChange(value)
 	}
 
 	return (
 		<Autocomplete
-			onChange={onCountryChange}
 			value={value}
+			onAbort={onCountryChange}
+			onChange={onCountryChange}
 			renderInput={(params) => <TextField label="Страна" variant="outlined" {...params} />}
 			options={countries}
 		>
@@ -23,6 +24,6 @@ export const Country = ({countries, onChange, value}) => {
 
 Country.propTypes = {
 	countries: PropTypes.arrayOf(PropTypes.string).isRequired,
-	value: PropTypes.string.isRequired,
+	value: PropTypes.string,
 	onChange: PropTypes.func.isRequired
 }
