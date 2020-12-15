@@ -12,6 +12,7 @@ export const setHotels = (hotels) => ({
 	payload: hotels,
 })
 
+
 export const setCurrentPage = (currentPAge) => ({
 	type: SET_CURRENT_PAGE,
 	payload: currentPAge
