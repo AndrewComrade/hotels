@@ -1,5 +1,0 @@
-export {Country} from './Country'
-export {Type} from './Type'
-export {Stars} from './Stars'
-export {Reviews} from './Reviews'
-export {Price} from './Price'
