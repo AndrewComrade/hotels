@@ -1,0 +1,4 @@
+export const SET_HOTELS = 'SET_HOTELS';
+export const FILTER_HOTELS = 'FILTER_HOTELS';
+export const RESET_FILTERS = 'RESET_FILTERS';
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
